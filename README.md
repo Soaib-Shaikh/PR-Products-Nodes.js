@@ -40,10 +40,4 @@ views/             # EJS templates for UI
 3. Configure your database in `configs/db.js`
 4. Start the server: `node index.js`
 
-## Deployment
-Add your deployment link here:
-`[Deployment Link](https://your-deployment-url.com)`
-
----
-
 Feel free to update this README with more details as your project evolves.
