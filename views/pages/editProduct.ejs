@@ -1,0 +1,117 @@
+<%- include('../partials/header')%>
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Edit Product </h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Library</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <form class="form-horizontal" method="post" action="/edit/<%= product.id %>" enctype="multipart/form-data">
+            <div class="card-body">
+              <h4 class="card-title"> Edit Product </h4>
+
+              <!-- Title -->
+              <div class="form-group row">
+                <label for="title" class="col-sm-3 text-end control-label col-form-label"> Title: </label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="title" name="title" value="<%= product.title %>" placeholder="Enter Title Here" />
+                </div>
+              </div>
+
+              <!-- Price -->
+              <div class="form-group row">
+                <label for="price" class="col-sm-3 text-end control-label col-form-label"> Price: </label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" id="price" name="price" value="<%= product.price %>" placeholder="Enter Price Here" />
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group row">
+                <label for="description" class="col-sm-3 text-end control-label col-form-label"> Description: </label>
+                <div class="col-sm-9">
+                  <textarea class="form-control" id="description" name="description" placeholder="Enter Description Here"><%= product.description %></textarea>
+                </div>
+              </div>
+
+              <!-- Category -->
+              <div class="form-group row">
+                <label for="category" class="col-sm-3 text-end control-label col-form-label">Category:</label>
+                <div class="col-sm-9">
+                  <select class="form-control" id="category" name="category">
+                    <% categories.forEach(cat => { %>
+                      <option value="<%= cat._id %>" <%= (product.category && product.category.toString() === cat._id.toString()) ? "selected" : "" %>>
+                        <%= cat.name %>
+                      </option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Sub-Category -->
+              <div class="form-group row">
+                <label for="subCategory" class="col-sm-3 text-end control-label col-form-label">Sub Category:</label>
+                <div class="col-sm-9">
+                  <select class="form-control" id="subCategory" name="subCategory">
+                    <% subCategories.forEach(sub => { %>
+                      <option value="<%= sub._id %>" <%= (product.subCategory && product.subCategory.toString() === sub._id.toString()) ? "selected" : "" %>>
+                        <%= sub.name %>
+                      </option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Extra-Category -->
+              <div class="form-group row">
+                <label for="extraCategory" class="col-sm-3 text-end control-label col-form-label">Extra Category:</label>
+                <div class="col-sm-9">
+                  <select class="form-control" id="extraCategory" name="extraCategory">
+                    <% extraCategories.forEach(extra => { %>
+                      <option value="<%= extra._id %>" <%= (product.extraCategory && product.extraCategory.toString() === extra._id.toString()) ? "selected" : "" %>>
+                        <%= extra.name %>
+                      </option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Image -->
+              <div class="form-group row">
+                <label for="image" class="col-sm-3 text-end control-label col-form-label"> Image: </label>
+                <div class="col-sm-9">
+                  <% if (product.image) { %>
+                    <img src="/<%= product.image %>" alt="Product Image" style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px; border-radius: 8px;">
+                  <% } %>
+                  <input type="file" class="form-control" id="image" name="image" placeholder="Enter Image Here" />
+                </div>
+              </div>
+
+            </div>
+            <div class="border-top">
+              <div class="card-body d-flex justify-content-evenly">
+                <button type="submit" class="btn btn-primary">Update Product</button>
+                <a href="/viewProduct" class="btn btn-instagram">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%- include('../partials/footer')%>

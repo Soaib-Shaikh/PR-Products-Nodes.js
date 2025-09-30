@@ -1,0 +1,60 @@
+<%- include('../partials/header')%>
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Sub-Categories</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Sub-Categories</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title mb-0">View Sub-Categories</h5>
+          </div>
+          <table class="table text-center align-middle table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Sub-Category Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% subCategories.forEach((subCategory, index) => { %>
+                <tr>
+                  <th scope="row"><%= index + 1 %></th>
+                  <td>
+                    <img src="/uploads/subCategory/<%= subCategory.image %>" 
+                         style="width:60px; height:60px; object-fit:cover; border-radius:8px;" 
+                         alt="<%= subCategory.name %>">
+                  </td>
+                  <td><%= subCategory.name %></td>
+                  <td>
+                    <div class="d-flex justify-content-center gap-2">
+                      <a href="/sub-category/delete/<%= subCategory.id %>" class="btn btn-danger btn-sm">Delete</a>
+                      <a href="/sub-category/edit/<%= subCategory.id %>" class="btn btn-warning btn-sm">Edit</a>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer')%>
