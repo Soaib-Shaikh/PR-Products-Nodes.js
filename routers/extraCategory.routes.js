@@ -1,31 +1,21 @@
 const { Router } = require("express");
-const multer = require("multer");
-const extCtl = require('../controllers/extraCategory.controller')
+const extCtl = require('../controllers/extraCategory.controller');
+const upload = require("../middlewares/upload");
+
 const extRouter = Router();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/extraCategory/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-
-const extCatUpload = multer({ storage: storage }).single('image');
-
 // Create
-extRouter.get('/create',extCtl.createPage );
-extRouter.post('/create', extCatUpload, extCtl.create);
+extRouter.get('/create', extCtl.createPage);
+extRouter.post('/create', upload.single('image'), extCtl.create);
 
 // View
 extRouter.get('/view', extCtl.viewData);
 
 // Delete
-extRouter.get('/delete/:id', extCtl.delete)
+extRouter.get('/delete/:id', extCtl.delete);
 
 // Edit
 extRouter.get('/edit/:id', extCtl.editpage);
-extRouter.post('/edit/:id',extCatUpload, extCtl.edit);
+extRouter.post('/edit/:id', upload.single('image'), extCtl.edit);
 
 module.exports = extRouter;

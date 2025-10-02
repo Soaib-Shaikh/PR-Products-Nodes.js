@@ -1,34 +1,21 @@
 const { Router } = require("express");
-const categoryCtl = require('../controllers/category.controller')
-const multer = require("multer")
+const categoryCtl = require('../controllers/category.controller');
+const upload = require("../middlewares/upload");
 
 const catRouter = Router();
 
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/category/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-
-const categoryUpload = multer({ storage: storage }).single('image');
-
 // Add Category
 catRouter.get('/add-category', categoryCtl.addCategoryPage);
-catRouter.post('/add-category',categoryUpload, categoryCtl.addData);
+catRouter.post('/add-category', upload.single('image'), categoryCtl.addData);
 
 // View Category
-catRouter.get('/view-category', categoryCtl.viewData)
+catRouter.get('/view-category', categoryCtl.viewData);
 
 // Delete
-catRouter.get('/delete/:id', categoryCtl.deleteCategory)
+catRouter.get('/delete/:id', categoryCtl.deleteCategory);
 
 // Edit
 catRouter.get('/edit/:id', categoryCtl.editCategoryPage);
-catRouter.post('/edit/:id',categoryUpload, categoryCtl.editCategory);
+catRouter.post('/edit/:id', upload.single('image'), categoryCtl.editCategory);
 
 module.exports = catRouter;
-

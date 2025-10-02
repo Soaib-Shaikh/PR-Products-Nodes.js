@@ -1,115 +1,95 @@
 <%- include('../partials/header')%>
-  <div class="page-wrapper">
-    <div class="page-breadcrumb">
-      <div class="row">
-        <div class="col-12 d-flex no-block align-items-center">
-          <h4 class="page-title">Tables</h4>
-          <div class="ms-auto text-end">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Library</li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title mb-0">View Products</h5>
-            </div>
-            <table class="table text-center align-middle table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Image</th>
-                  <th>Title</th>
-                  <th>Price</th>
-                  <th>Description</th>
-                  <th>Category</th>
-                  <th>Sub-Category</th>
-                  <th>Extra-Category</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% products.forEach((product, index)=> { %>
-                  <tr>
-                    <th scope="row">
-                      <%= index + 1 %>
-                    </th>
-
-                    <td>
-                      <img src="<%= product.image %>" alt="Product Image"
-                        style="width: 80px; height: 80px; object-fit: cover; border-radius:8px;">
-                    </td>
-
-                    <td>
-                      <%= product.title %>
-                    </td>
-                    <td>Rs.<%= product.price %>
-                    </td>
-                    <td style="max-width: 350px; white-space: normal; word-wrap: break-word;">
-                      <%= product.description %>
-                    </td>
-
-                    <td>
-                      <% if(product.category) { %>
-                        <div class="d-flex align-items-center justify-content-center">
-                          <img src="/uploads/category/<%= product.category.image %>" alt="<%= product.category.name %>"
-                            style="width:40px; height:40px; object-fit:cover; border-radius:8px; margin-right:5px;">
-                          <span>
-                            <%= product.category.name %>
-                          </span>
-                        </div>
-                        <% } else { %> N/A <% } %>
-                    </td>
-
-                    <td>
-                      <% if(product.subCategory) { %>
-                        <div class="d-flex align-items-center justify-content-center">
-                          <img src="/uploads/subCategory/<%= product.subCategory.image %>"
-                            alt="<%= product.subCategory.name %>"
-                            style="width:40px; height:40px; object-fit:cover; border-radius:8px; margin-right:5px;">
-                          <span>
-                            <%= product.subCategory.name %>
-                          </span>
-                        </div>
-                        <% } else { %> N/A <% } %>
-                    </td>
-
-                    <td>
-                      <% if(product.extraCategory) { %>
-                        <div class="d-flex align-items-center justify-content-center">
-                          <img src="/uploads/extraCategory/<%= product.extraCategory.image %>"
-                            alt="<%= product.extraCategory.name %>"
-                            style="width:40px; height:40px; object-fit:cover; border-radius:8px; margin-right:5px;">
-                          <span>
-                            <%= product.extraCategory.name %>
-                          </span>
-                        </div>
-                        <% } else { %> N/A <% } %>
-                    </td>
-
-                    <td>
-                      <div class="d-flex justify-content-center gap-2">
-                        <a href="/delete/<%= product.id %>" class="btn btn-danger btn-sm">Delete</a>
-                        <a href="/edit/<%= product.id %>" class="btn btn-warning btn-sm">Edit</a>
-                      </div>
-                    </td>
-
-                  </tr>
-                  <% }) %>
-              </tbody>
-            </table>
-          </div>
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Products</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Products</li>
+            </ol>
+          </nav>
         </div>
       </div>
     </div>
   </div>
-  <%- include('../partials/footer')%>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title mb-0">View Products</h5>
+          </div>
+          <table class="table text-center align-middle table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Sub-Category</th>
+                <th>Extra-Category</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% products.forEach((product, index)=> { %>
+                <tr>
+                  <th scope="row"><%= index + 1 %></th>
+                  <td>
+                    <img src="<%= product.image %>" alt="Product Image"
+                      style="width: 80px; height: 80px; object-fit: cover; border-radius:8px;">
+                  </td>
+                  <td><%= product.title %></td>
+                  <td>Rs.<%= product.price %></td>
+                  <td style="max-width: 350px; white-space: normal; word-wrap: break-word;">
+                    <%= product.description %>
+                  </td>
+                  <td>
+                    <% if(product.category) { %>
+                      <div class="d-flex align-items-center justify-content-center">
+                        <img src="<%= product.category.image %>" alt="<%= product.category.name %>"
+                          style="width:40px; height:40px; object-fit:cover; border-radius:8px; margin-right:5px;">
+                        <span><%= product.category.name %></span>
+                      </div>
+                    <% } else { %> N/A <% } %>
+                  </td>
+                  <td>
+                    <% if(product.subCategory) { %>
+                      <div class="d-flex align-items-center justify-content-center">
+                        <img src="<%= product.subCategory.image %>" alt="<%= product.subCategory.name %>"
+                          style="width:40px; height:40px; object-fit:cover; border-radius:8px; margin-right:5px;">
+                        <span><%= product.subCategory.name %></span>
+                      </div>
+                    <% } else { %> N/A <% } %>
+                  </td>
+                  <td>
+                    <% if(product.extraCategory) { %>
+                      <div class="d-flex align-items-center justify-content-center">
+                        <img src="<%= product.extraCategory.image %>" alt="<%= product.extraCategory.name %>"
+                          style="width:40px; height:40px; object-fit:cover; border-radius:8px; margin-right:5px;">
+                        <span><%= product.extraCategory.name %></span>
+                      </div>
+                    <% } else { %> N/A <% } %>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center gap-2">
+                      <a href="/delete/<%= product.id %>" class="btn btn-danger btn-sm">Delete</a>
+                      <a href="/edit/<%= product.id %>" class="btn btn-warning btn-sm">Edit</a>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer')%>

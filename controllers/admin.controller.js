@@ -1,11 +1,7 @@
-const path = require('path');
 const Product = require('../models/productSchema');
-const fs = require('fs');
 const Category = require('../models/categorySchema');
-const { setUncaughtExceptionCaptureCallback } = require('process');
 const SubCategory = require('../models/subCategorySchema');
 const ExtraCategory = require('../models/extraCatSchema');
-
 
 exports.homePage = (req, res) => {
     return res.render('index');
@@ -15,8 +11,8 @@ exports.tablePage = async (req, res) => {
     try {
         const products = await Product.find()
             .populate('category', 'name image')
-            .populate('subCategory', 'name image ')
-            .populate('extraCategory', 'name image ');
+            .populate('subCategory', 'name image')
+            .populate('extraCategory', 'name image');
         return res.render('./pages/viewProduct', { products });
     } catch (error) {
         console.log(error.message);
@@ -38,7 +34,7 @@ exports.formBasicPage = async (req, res) => {
 
 exports.formBasic = async (req, res) => {
     try {
-        req.body.image = req.file.path;
+        if (req.file) req.body.image = req.file.path; // Cloudinary URL
         await Product.create(req.body);
         console.log('Product created.');
         return res.redirect(req.get('Referrer') || '/');
@@ -51,10 +47,9 @@ exports.formBasic = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const product = await Product.findByIdAndDelete(id);
-        fs.unlinkSync(path.join(__dirname, '..', product.image))
+        await Product.findByIdAndDelete(id);
         console.log('Product Deleted.');
-        return res.redirect('/viewProduct')
+        return res.redirect('/viewProduct');
     } catch (error) {
         console.log(error.message);
         res.redirect(req.get('referrer') || '/');
@@ -64,14 +59,13 @@ exports.deleteProduct = async (req, res) => {
 exports.editProductPage = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
-        if (!product) {
-            return res.redirect(req.get('Referrer') || '/');
-        }
+        if (!product) return res.redirect(req.get('Referrer') || '/');
+
         const categories = await Category.find();
         const subCategories = await SubCategory.find();
         const extraCategories = await ExtraCategory.find();
 
-        return res.render('./pages/editProduct', { product, categories, subCategories, extraCategories })
+        return res.render('./pages/editProduct', { product, categories, subCategories, extraCategories });
     } catch (error) {
         console.log(error.message);
         return res.redirect(req.get('Referrer') || '/');
@@ -85,20 +79,8 @@ exports.editProduct = async (req, res) => {
 
         const updateData = { title, price, description, category, subCategory, extraCategory };
 
-        if (req.file) {
-            const product = await Product.findById(id);
- 
-            if (product.image) {
-                const oldImagePath = path.join(__dirname, '..', product.image);
-                try {
-                    fs.unlinkSync(oldImagePath);
-                } catch (err) {
-                    console.log(err);
+        if (req.file) updateData.image = req.file.path; // Cloudinary URL
 
-                }
-            }
-            updateData.image = req.file.path;
-        }
         await Product.findByIdAndUpdate(id, updateData, { new: true });
         console.log('Product Updated.');
         return res.redirect('/viewProduct');

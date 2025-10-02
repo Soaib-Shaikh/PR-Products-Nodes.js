@@ -1,23 +1,12 @@
 const { Router } = require("express");
 const subCatCtl = require('../controllers/subCategory.controller');
-const multer = require("multer");
+const upload = require("../middlewares/upload");
+
 const subCatRouter = Router();
 
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/subCategory/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-
-const subCatUpload = multer({ storage: storage }).single('image');
-
 // Create
-subCatRouter.get('/create',subCatCtl.createpage);
-subCatRouter.post('/create',subCatUpload, subCatCtl.createData);
+subCatRouter.get('/create', subCatCtl.createpage);
+subCatRouter.post('/create', upload.single('image'), subCatCtl.createData);
 
 // View
 subCatRouter.get('/view', subCatCtl.viewData);
@@ -27,6 +16,6 @@ subCatRouter.get('/delete/:id', subCatCtl.delete);
 
 // Edit
 subCatRouter.get('/edit/:id', subCatCtl.editPage);
-subCatRouter.post('/edit/:id',subCatUpload, subCatCtl.update);
+subCatRouter.post('/edit/:id', upload.single('image'), subCatCtl.update);
 
 module.exports = subCatRouter;

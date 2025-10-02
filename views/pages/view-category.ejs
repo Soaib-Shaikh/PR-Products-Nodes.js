@@ -4,14 +4,6 @@
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
         <h4 class="page-title">Categories</h4>
-        <div class="ms-auto text-end">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Categories</li>
-            </ol>
-          </nav>
-        </div>
       </div>
     </div>
   </div>
@@ -28,7 +20,7 @@
               <tr>
                 <th>#</th>
                 <th>Image</th>
-                <th>Category Name</th>
+                <th>Name</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -37,9 +29,7 @@
                 <tr>
                   <th scope="row"><%= index + 1 %></th>
                   <td>
-                    <img src="/uploads/category/<%= category.image %>" 
-                         style="width:80px; height:80px; object-fit:cover; border-radius:8px;" 
-                         alt="<%= category.name %>">
+                    <img src="<%= category.image %>" style="width:80px; height:80px; object-fit:cover; border-radius:8px;" alt="<%= category.name %>">
                   </td>
                   <td><%= category.name %></td>
                   <td>
